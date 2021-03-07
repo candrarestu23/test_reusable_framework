@@ -1,13 +1,12 @@
 import UIKit
-
-class MyLibrary {
+public class MyLibrary {
     
     /// convert HexaDecimal to UIColor
     /// - Parameters:
     ///   - hexString: Hexa Decimal value
     ///   - alpha: alpha colro
     /// - Returns: UIColor
-    class func colorFromHexString(_ hexString: String, alpha: CGFloat = 1.0) -> UIColor {
+    internal class func colorFromHexString(_ hexString: String, alpha: CGFloat = 1.0) -> UIColor {
         let r, g, b: CGFloat
         let offset = hexString.hasPrefix("#") ? 1 : 0
         let start = hexString.index(hexString.startIndex, offsetBy: offset)
@@ -21,5 +20,11 @@ class MyLibrary {
             return UIColor(red: r, green: g, blue: b, alpha: alpha)
         }
         return UIColor(red: 0, green: 0, blue: 0, alpha: alpha)
+    }
+    
+    
+    /// test variable
+    public static var myColor: UIColor {
+        return self.colorFromHexString("006736")
     }
 }
