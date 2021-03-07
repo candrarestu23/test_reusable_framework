@@ -27,4 +27,10 @@ public class MyLibrary {
     public static var myColor: UIColor {
         return self.colorFromHexString("006736")
     }
+    
+    
+    /// test variable 2
+    public static var secondaryMyColor: UIColor {
+        return self.colorFromHexString("FCFFD")
+    }
 }
