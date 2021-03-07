@@ -6,6 +6,20 @@
 //
 
 import Foundation
+
+protocol NetworkSession {
+    func get(from url: URL, completionHandler: @escaping (Data?, Error?) -> Void)
+}
+
+extension URLSession: NetworkSession {
+    func get(from url: URL, completionHandler: @escaping (Data?, Error?) -> Void) {
+        let task = dataTask(with: url) { data, _, error in
+            completionHandler(data, error)
+        }
+        task.resume()
+    }
+}
+
 extension MyLibrary {
     public class Networking {
         
@@ -14,14 +28,17 @@ extension MyLibrary {
         public class Manager {
             public init() {}
             
-            private let session = URLSession.shared
+            internal var session: NetworkSession = URLSession.shared
             
+            /// Update API from URL Session
+            /// - Parameters:
+            ///   - url: url
+            ///   - completionHandler: completion Handler
             public func loadData(from url: URL, completionHandler: @escaping (NetworkResult<Data>) -> Void) {
-                let task = session.dataTask(with: url) { data, response, error in
+                session.get(from: url) { data, error in
                     let result = data.map(NetworkResult<Data>.success) ?? .failure(error)
                     completionHandler(result)
                 }
-                task.resume()
             }
         }
         
